@@ -5,107 +5,144 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>باز کردن لینک</title>
   <style>
-    body {
+    * {
       margin: 0;
-      height: 100vh;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #f0f2f5;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       font-family: system-ui, -apple-system, sans-serif;
       direction: rtl;
+      padding: 15px;
     }
+    
     .container {
-      text-align: center;
       background: white;
-      padding: 40px 20px;
-      border-radius: 24px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
-      max-width: 90%;
-      width: 500px;
+      padding: 40px 25px;
+      border-radius: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
     }
+    
     h1 {
       font-size: 2em;
-      margin-bottom: 20px;
-      color: #1a73e8;
+      margin-bottom: 15px;
+      color: #1a1a1a;
     }
-    p {
-      font-size: 1.1em;
+    
+    .subtitle {
+      color: #666;
       margin-bottom: 30px;
-      color: #555;
+      font-size: 1.1em;
     }
-    .browser-buttons {
+    
+    .url-box {
+      background: #f3f4f6;
+      padding: 20px;
+      border-radius: 16px;
+      margin: 25px 0;
+      border: 2px solid #e5e7eb;
+      word-break: break-all;
+      font-family: monospace;
+      font-size: 1.1em;
+      color: #2563eb;
+      font-weight: bold;
+    }
+    
+    .button-group {
       display: flex;
       flex-direction: column;
       gap: 12px;
       margin: 25px 0;
     }
-    button {
-      color: white;
+    
+    .btn {
+      padding: 18px 24px;
       border: none;
-      padding: 18px 20px;
+      border-radius: 16px;
       font-size: 1.2em;
-      border-radius: 14px;
+      font-weight: bold;
       cursor: pointer;
-      transition: all 0.2s;
-      font-weight: bold;
-      width: 100%;
+      transition: all 0.3s;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
-    #chrome-btn {
+    
+    .btn:active {
+      transform: scale(0.98);
+    }
+    
+    .btn-chrome {
       background: #ea4335;
-      box-shadow: 0 4px 10px rgba(234, 67, 53, 0.3);
+      box-shadow: 0 8px 20px rgba(234, 67, 53, 0.3);
     }
-    #chrome-btn:hover {
-      background: #d33426;
-      transform: scale(1.02);
-    }
-    #firefox-btn {
+    
+    .btn-firefox {
       background: #ff7139;
-      box-shadow: 0 4px 10px rgba(255, 113, 57, 0.3);
+      box-shadow: 0 8px 20px rgba(255, 113, 57, 0.3);
     }
-    #firefox-btn:hover {
-      background: #e65a00;
-      transform: scale(1.02);
-    }
-    #copy-btn {
+    
+    .btn-copy {
       background: #34a853;
-      box-shadow: 0 4px 10px rgba(52, 168, 83, 0.3);
-      margin-top: 10px;
+      box-shadow: 0 8px 20px rgba(52, 168, 83, 0.3);
     }
-    #copy-btn:hover {
-      background: #2d8e47;
+    
+    .btn-link {
+      background: #1a73e8;
+      box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+      text-decoration: none;
+      display: inline-block;
     }
-    .link-box {
-      background: #f5f5f5;
-      padding: 15px;
-      border-radius: 12px;
-      margin: 20px 0;
-      border: 1px dashed #aaa;
-      word-break: break-all;
-      font-family: monospace;
-      font-size: 0.9em;
-    }
-    #success {
-      color: #34a853;
-      font-weight: bold;
-      margin-top: 20px;
-      padding: 10px;
-      background: #e8f5e9;
-      border-radius: 8px;
-      display: none;
-    }
-    .note {
-      font-size: 0.85em;
-      color: #777;
-      margin-top: 20px;
-      padding: 15px;
-      background: #fafafa;
+    
+    .success-message {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 12px;
       border-radius: 10px;
+      margin-top: 15px;
+      display: none;
+      font-weight: bold;
+    }
+    
+    .warning-box {
+      background: #fff3cd;
+      border: 2px solid #ffeeba;
+      color: #856404;
+      padding: 20px;
+      border-radius: 16px;
+      margin-top: 25px;
       text-align: right;
     }
-    .note ol {
-      margin: 5px 0;
-      padding-right: 20px;
+    
+    .warning-box h3 {
+      margin-bottom: 10px;
+      color: #533f03;
+    }
+    
+    .warning-box ol {
+      padding-right: 25px;
+      line-height: 1.8;
+    }
+    
+    .warning-box li {
+      margin: 8px 0;
+    }
+    
+    .hidden-link {
+      opacity: 0;
+      position: absolute;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -113,94 +150,145 @@
 
 <div class="container">
   <h1>🔗 باز کردن لینک ویژه</h1>
-  <p>این لینک فقط در کروم یا فایرفاکس به درستی باز میشه</p>
-
-  <div class="browser-buttons">
-    <button id="chrome-btn">📱 باز کردن در Google Chrome</button>
-    <button id="firefox-btn">🦊 باز کردن در Mozilla Firefox</button>
+  <p class="subtitle">این لینک فقط در کروم یا فایرفاکس به درستی باز میشه</p>
+  
+  <div class="url-box" id="urlDisplay">
+    https://my-us.github.io
   </div>
 
-  <div class="link-box" id="linkDisplay">
-    https://my-account.github.io
+  <!-- لینک مخفی برای کلیک مستقیم -->
+  <a href="https://my-us.github.io" id="directLink" class="hidden-link" target="_blank" rel="noopener noreferrer">لینک مستقیم</a>
+
+  <div class="button-group">
+    <button class="btn btn-chrome" id="chromeBtn">
+      <span>📱</span> باز کردن در کروم
+    </button>
+    
+    <button class="btn btn-firefox" id="firefoxBtn">
+      <span>🦊</span> باز کردن در فایرفاکس
+    </button>
+    
+    <button class="btn btn-copy" id="copyBtn">
+      <span>📋</span> کپی لینک
+    </button>
+    
+    <a href="https://my-us.github.io" class="btn btn-link" target="_blank" rel="noopener noreferrer">
+      <span>🔗</span> کلیک مستقیم (ضمانتی)
+    </a>
   </div>
 
-  <button id="copy-btn">📋 کپی کردن لینک</button>
-  <div id="success">✅ لینک کپی شد!</div>
+  <div class="success-message" id="successMsg">
+    ✅ لینک با موفقیت کپی شد!
+  </div>
 
-  <div class="note">
-    <strong>📌 روش جایگزین (ضمانتی):</strong>
+  <div class="warning-box">
+    <h3>⚠️ روش استفاده ضمانتی:</h3>
     <ol>
-      <li>روی دکمه کپی کلیک کن</li>
-      <li>مرورگر کروم یا فایرفاکس رو باز کن</li>
-      <li>لینک رو در نوار آدرس paste کن</li>
+      <li><strong>روی دکمه "کلیک مستقیم" بزن</strong> - ساده‌ترین راه</li>
+      <li>اگه باز نشد، دکمه "کپی لینک" رو بزن</li>
+      <li>خودت مرورگر کروم یا فایرفاکس رو باز کن</li>
+      <li>لینک رو در نوار آدرس paste کن (روی نوار آدرس فشار بده و گزینه Paste رو بزن)</li>
+      <li>دکمه Enter رو بزن</li>
     </ol>
-    <p style="color: #d32f2f; margin-top: 5px;">⚠️ اگه دکمه‌ها کار نکردن، از روش بالا استفاده کن</p>
+    <p style="margin-top: 15px; color: #d32f2f; font-weight: bold;">❗ اگه بازم کار نکرد، لینک رو به صورت دستی تایپ کن</p>
   </div>
 </div>
 
 <script>
-// لینک نهایی - اینو عوض کن
-const targetUrl = "https://my-account.github.io";
+// تنظیم لینک مورد نظر
+const TARGET_URL = "https://my-us.github.io";
 
-// نشون دادن لینک
-document.getElementById('linkDisplay').innerText = targetUrl;
+// به‌روزرسانی لینک در صفحه
+document.getElementById('urlDisplay').innerText = TARGET_URL;
+document.getElementById('directLink').href = TARGET_URL;
 
-// دکمه کروم
-document.getElementById('chrome-btn').onclick = function() {
-  // تلاش برای باز کردن مستقیم
-  window.open(targetUrl, '_blank');
+// تابع باز کردن لینک با روش‌های مختلف
+function openLink(url) {
+  // روش 1: استفاده از لینک مخفی
+  const directLink = document.getElementById('directLink');
+  directLink.click();
   
-  // اگه اندرویده، یه راه دیگه هم امتحان کن
+  // روش 2: باز کردن مستقیم (پشتیبان)
+  setTimeout(() => {
+    window.open(url, '_blank');
+  }, 100);
+  
+  // روش 3: برای اندروید - روش intent
   if (/Android/i.test(navigator.userAgent)) {
     try {
-      // روش intent برای کروم
-      window.location.href = `intent://${targetUrl.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;end`;
-    } catch(e) {
-      console.log('intent failed');
+      // سعی می‌کنیم با intent باز کنیم
+      const intentUrl = `intent://${url.replace('https://', '').replace('http://', '')}#Intent;scheme=https;package=com.android.chrome;end`;
+      window.location.href = intentUrl;
+    } catch (e) {
+      console.log('Intent failed:', e);
     }
   }
   
-  // پیام راهنما
+  // نمایش پیام راهنما
   setTimeout(() => {
-    alert("📌 اگه باز نشد:\n1. لینک رو کپی کن\n2. خودت کروم رو باز کن\n3. لینک رو paste کن");
-  }, 1500);
+    alert('📌 راهنمایی:\nاگر لینک باز نشد:\n1. روی "کپی لینک" بزن\n2. خودت کروم/فایرفاکس رو باز کن\n3. لینک رو paste کن');
+  }, 500);
+}
+
+// دکمه کروم
+document.getElementById('chromeBtn').onclick = function() {
+  openLink(TARGET_URL);
 };
 
-// دکمه فایرفاکس
-document.getElementById('firefox-btn').onclick = function() {
-  window.open(targetUrl, '_blank');
-  
-  if (/Android/i.test(navigator.userAgent)) {
-    try {
-      window.location.href = `intent://${targetUrl.replace('https://', '')}#Intent;scheme=https;package=org.mozilla.firefox;end`;
-    } catch(e) {}
+// دکمه فایرفاکس - دقیقاً مثل کروم عمل می‌کنه
+document.getElementById('firefoxBtn').onclick = function() {
+  openLink(TARGET_URL);
+};
+
+// دکمه کپی لینک
+document.getElementById('copyBtn').onclick = async function() {
+  try {
+    await navigator.clipboard.writeText(TARGET_URL);
+    showSuccessMessage();
+  } catch (err) {
+    // روش قدیمی برای مرورگرهای ضعیف
+    copyToClipboardFallback(TARGET_URL);
+    showSuccessMessage();
   }
-  
-  setTimeout(() => {
-    alert("📌 اگه باز نشد:\n1. لینک رو کپی کن\n2. خودت فایرفاکس رو باز کن\n3. لینک رو paste کن");
-  }, 1500);
 };
 
-// کپی کردن
-document.getElementById('copy-btn').onclick = function() {
-  navigator.clipboard.writeText(targetUrl)
-    .then(() => {
-      document.getElementById('success').style.display = 'block';
-      setTimeout(() => document.getElementById('success').style.display = 'none', 3000);
-    })
-    .catch(() => {
-      // روش قدیمی برای مرورگرهایی که clipboard API ندارن
-      const textarea = document.createElement('textarea');
-      textarea.value = targetUrl;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-      
-      document.getElementById('success').style.display = 'block';
-      setTimeout(() => document.getElementById('success').style.display = 'none', 3000);
-    });
-};
+function copyToClipboardFallback(text) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+}
+
+function showSuccessMessage() {
+  const msg = document.getElementById('successMsg');
+  msg.style.display = 'block';
+  setTimeout(() => {
+    msg.style.display = 'none';
+  }, 3000);
+}
+
+// اگه مرورگر کروم یا فایرفاکس بود، یه پیام نشون بده
+function detectBrowser() {
+  const ua = navigator.userAgent.toLowerCase();
+  const isChrome = !!window.chrome && navigator.vendor?.toLowerCase().includes('google') && !/edg\//.test(ua);
+  const isFirefox = /firefox|fxios/.test(ua);
+  
+  if (isChrome || isFirefox) {
+    // اگه خودش توی مرورگر درسته، می‌تونیم بعد ۳ ثانیه لینک رو باز کنیم
+    setTimeout(() => {
+      if (confirm('مرورگر شما مناسب است. می‌خواهید لینک باز شود؟')) {
+        window.location.href = TARGET_URL;
+      }
+    }, 1000);
+  }
+}
+
+// اجرای تشخیص مرورگر
+detectBrowser();
 </script>
 
 </body>
