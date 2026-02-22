@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open in Chrome or Firefox</title>
+  <title>باز کردن لینک</title>
   <style>
     body {
       margin: 0;
@@ -13,173 +13,192 @@
       justify-content: center;
       background: #f0f2f5;
       font-family: system-ui, -apple-system, sans-serif;
-      color: #333;
+      direction: rtl;
     }
     .container {
       text-align: center;
       background: white;
-      padding: 50px 30px;
-      border-radius: 16px;
+      padding: 40px 20px;
+      border-radius: 24px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.12);
       max-width: 90%;
+      width: 500px;
     }
     h1 {
-      font-size: 2.4em;
+      font-size: 2em;
       margin-bottom: 20px;
       color: #1a73e8;
     }
     p {
-      font-size: 1.2em;
+      font-size: 1.1em;
       margin-bottom: 30px;
       color: #555;
     }
+    .browser-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 25px 0;
+    }
     button {
-      background: #1a73e8;
       color: white;
       border: none;
-      padding: 16px 40px;
-      font-size: 1.3em;
-      border-radius: 10px;
+      padding: 18px 20px;
+      font-size: 1.2em;
+      border-radius: 14px;
       cursor: pointer;
-      margin: 10px;
-      transition: background 0.2s;
+      transition: all 0.2s;
+      font-weight: bold;
+      width: 100%;
     }
-    button:hover {
-      background: #0d65d6;
+    #chrome-btn {
+      background: #ea4335;
+      box-shadow: 0 4px 10px rgba(234, 67, 53, 0.3);
+    }
+    #chrome-btn:hover {
+      background: #d33426;
+      transform: scale(1.02);
+    }
+    #firefox-btn {
+      background: #ff7139;
+      box-shadow: 0 4px 10px rgba(255, 113, 57, 0.3);
+    }
+    #firefox-btn:hover {
+      background: #e65a00;
+      transform: scale(1.02);
     }
     #copy-btn {
       background: #34a853;
+      box-shadow: 0 4px 10px rgba(52, 168, 83, 0.3);
+      margin-top: 10px;
     }
     #copy-btn:hover {
       background: #2d8e47;
     }
-    #chrome-btn {
-      background: #ea4335;
-    }
-    #chrome-btn:hover {
-      background: #d33426;
-    }
-    #firefox-btn {
-      background: #ff7139;
-    }
-    #firefox-btn:hover {
-      background: #e65a00;
+    .link-box {
+      background: #f5f5f5;
+      padding: 15px;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 1px dashed #aaa;
+      word-break: break-all;
+      font-family: monospace;
+      font-size: 0.9em;
     }
     #success {
       color: #34a853;
       font-weight: bold;
       margin-top: 20px;
+      padding: 10px;
+      background: #e8f5e9;
+      border-radius: 8px;
       display: none;
     }
-    .browser-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin: 20px 0;
+    .note {
+      font-size: 0.85em;
+      color: #777;
+      margin-top: 20px;
+      padding: 15px;
+      background: #fafafa;
+      border-radius: 10px;
+      text-align: right;
     }
-    .browser-buttons button {
-      flex: 1 1 auto;
-      min-width: 150px;
+    .note ol {
+      margin: 5px 0;
+      padding-right: 20px;
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>🔗 باز کردن لینک</h1>
-  <p>این لینک فقط در کروم یا فایرفاکس باز می‌شه</p>
+  <h1>🔗 باز کردن لینک ویژه</h1>
+  <p>این لینک فقط در کروم یا فایرفاکس به درستی باز میشه</p>
 
-  <div id="allowed-content" style="display: none;">
-    <p style="color: #34a853; font-size: 1.4em; font-weight: bold;">✓ مرورگر شما مناسب است</p>
-    <p>در حال انتقال...</p>
+  <div class="browser-buttons">
+    <button id="chrome-btn">📱 باز کردن در Google Chrome</button>
+    <button id="firefox-btn">🦊 باز کردن در Mozilla Firefox</button>
   </div>
 
-  <div id="not-allowed-content">
-    <p style="color: #ea4335; font-size: 1.4em; font-weight: bold;">لطفاً از کروم یا فایرفاکس استفاده کنید</p>
-    <p>روی دکمه مورد نظر کلیک کنید:</p>
+  <div class="link-box" id="linkDisplay">
+    https://my-account.github.io
+  </div>
 
-    <div class="browser-buttons">
-      <button id="chrome-btn">📱 باز کردن در کروم</button>
-      <button id="firefox-btn">🦊 باز کردن در فایرفاکس</button>
-    </div>
+  <button id="copy-btn">📋 کپی کردن لینک</button>
+  <div id="success">✅ لینک کپی شد!</div>
 
-    <p>یا لینک را کپی کنید:</p>
-    <input type="text" id="linkInput" readonly value="https://my-account.github.io" style="width: 80%; padding: 10px; font-size: 1em;">
-
-    <br><br>
-    <button id="copy-btn" style="background: #34a853;">📋 کپی لینک</button>
-
-    <div id="success">✅ لینک کپی شد! حالا توی مرورگر مناسب paste کن.</div>
-    
-    <hr>
-    <p style="font-size: 0.9em; color: #777;">اگر دکمه‌ها کار نکردن، لینک رو کپی کن و مستقیماً توی کروم یا فایرفاکس باز کن.</p>
+  <div class="note">
+    <strong>📌 روش جایگزین (ضمانتی):</strong>
+    <ol>
+      <li>روی دکمه کپی کلیک کن</li>
+      <li>مرورگر کروم یا فایرفاکس رو باز کن</li>
+      <li>لینک رو در نوار آدرس paste کن</li>
+    </ol>
+    <p style="color: #d32f2f; margin-top: 5px;">⚠️ اگه دکمه‌ها کار نکردن، از روش بالا استفاده کن</p>
   </div>
 </div>
 
 <script>
-const targetUrl = "https://my-account.github.io"; // لینک خودت رو بذار
+// لینک نهایی - اینو عوض کن
+const targetUrl = "https://my-account.github.io";
 
-// تشخیص مرورگر
-function isAllowedBrowser() {
-  const ua = navigator.userAgent.toLowerCase();
-  const isChrome = !!window.chrome && navigator.vendor?.toLowerCase().includes('google') && !/edg\//.test(ua) && !/opr\//.test(ua);
-  const isFirefox = /firefox|fxios/.test(ua);
-  return isChrome || isFirefox;
-}
+// نشون دادن لینک
+document.getElementById('linkDisplay').innerText = targetUrl;
 
-// نمایش محتوای مناسب
-const isAllowed = isAllowedBrowser();
-if (isAllowed) {
-  document.getElementById('allowed-content').style.display = 'block';
-  setTimeout(() => {
-    window.location.href = targetUrl;
-  }, 2000);
-}
-
-// دکمه باز کردن در کروم
+// دکمه کروم
 document.getElementById('chrome-btn').onclick = function() {
-  if (/Android/i.test(navigator.userAgent)) {
-    // روش مخصوص اندروید
-    window.location.href = `intent:${targetUrl}#Intent;scheme=https;package=com.android.chrome;end`;
-    
-    // اگه intent کار نکرد، یه پیام نشون بده
-    setTimeout(() => {
-      alert("اگه کروم باز نشد، لینک رو کپی کن و مستقیماً توی کروم paste کن.");
-    }, 1000);
-  } else {
-    // برای آیفون یا کامپیوتر
-    window.open(targetUrl, '_blank');
-  }
-};
-
-// دکمه باز کردن در فایرفاکس
-document.getElementById('firefox-btn').onclick = function() {
-  if (/Android/i.test(navigator.userAgent)) {
-    // روش مخصوص اندروید برای فایرفاکس
-    window.location.href = `intent:${targetUrl}#Intent;scheme=https;package=org.mozilla.firefox;end`;
-    
-    setTimeout(() => {
-      alert("اگه فایرفاکس باز نشد، لینک رو کپی کن و مستقیماً توی فایرفاکس paste کن.");
-    }, 1000);
-  } else {
-    window.open(targetUrl, '_blank');
-  }
-};
-
-// کپی لینک
-document.getElementById('copy-btn').onclick = function() {
-  const input = document.getElementById('linkInput');
-  input.select();
-  input.setSelectionRange(0, 99999);
+  // تلاش برای باز کردن مستقیم
+  window.open(targetUrl, '_blank');
   
+  // اگه اندرویده، یه راه دیگه هم امتحان کن
+  if (/Android/i.test(navigator.userAgent)) {
+    try {
+      // روش intent برای کروم
+      window.location.href = `intent://${targetUrl.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;end`;
+    } catch(e) {
+      console.log('intent failed');
+    }
+  }
+  
+  // پیام راهنما
+  setTimeout(() => {
+    alert("📌 اگه باز نشد:\n1. لینک رو کپی کن\n2. خودت کروم رو باز کن\n3. لینک رو paste کن");
+  }, 1500);
+};
+
+// دکمه فایرفاکس
+document.getElementById('firefox-btn').onclick = function() {
+  window.open(targetUrl, '_blank');
+  
+  if (/Android/i.test(navigator.userAgent)) {
+    try {
+      window.location.href = `intent://${targetUrl.replace('https://', '')}#Intent;scheme=https;package=org.mozilla.firefox;end`;
+    } catch(e) {}
+  }
+  
+  setTimeout(() => {
+    alert("📌 اگه باز نشد:\n1. لینک رو کپی کن\n2. خودت فایرفاکس رو باز کن\n3. لینک رو paste کن");
+  }, 1500);
+};
+
+// کپی کردن
+document.getElementById('copy-btn').onclick = function() {
   navigator.clipboard.writeText(targetUrl)
     .then(() => {
       document.getElementById('success').style.display = 'block';
-      setTimeout(() => document.getElementById('success').style.display = 'none', 4000);
+      setTimeout(() => document.getElementById('success').style.display = 'none', 3000);
     })
     .catch(() => {
-      alert("کپی نشد! دستی کپی کن: " + targetUrl);
+      // روش قدیمی برای مرورگرهایی که clipboard API ندارن
+      const textarea = document.createElement('textarea');
+      textarea.value = targetUrl;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      
+      document.getElementById('success').style.display = 'block';
+      setTimeout(() => document.getElementById('success').style.display = 'none', 3000);
     });
 };
 </script>
